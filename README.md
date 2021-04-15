@@ -1,13 +1,5 @@
-# Title
+# SA2
 
-*description*
+Site that loads an image and counts the seconds the page has been there.
 
-[deployed url](http://url-if-deployed-here)
-
-## What Worked Well
-
-## What Didn't
-
-## Extra Credit
-
-## Screenshots
+[deployed url](https://brave-williams-d890d6.netlify.app)
