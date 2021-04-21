@@ -66,6 +66,14 @@ noteUpdate = (id, text) => {
   }));
 }
 
+positionUpdate = (id, x, y) => {
+  this.setState((prevState) => ({
+    allNotes: prevState.allNotes.update(id, (prevNote) => {
+      return { ...prevNote, x, y };
+    }),
+  }));
+}
+
 // iterates through the map and renders all of the notes
 renderNote() {
   // iterate through all the items in the Map
@@ -77,6 +85,7 @@ renderNote() {
         finishEdit={this.noteUpdate}
         onEdit={this.noteEditUpdate}
         onDelete={this.deleteNote}
+        dragFinish={this.positionUpdate}
       />
     );
   });
