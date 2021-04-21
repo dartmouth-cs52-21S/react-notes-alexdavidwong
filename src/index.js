@@ -4,7 +4,6 @@ add draggability
 add rendering for each note
 */
 
-
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
@@ -24,9 +23,8 @@ class App extends Component {
     };
   }
 
-  /*
-  newNote = (title) => {
-    // eslint-disable-next-line no-unused-vars
+  // adds a new note, triggered by submit button
+  addNote = (title) => {
     const id = this.state.count;
     const note = {
       title,
@@ -34,61 +32,65 @@ class App extends Component {
       x: 200,
       y: 20,
       zIndex: 10,
-    };
-
-    this.setState((prevState) => ({
-      notes: prevState.allNotes.set(0, note),
-      count: prevState.count + 1,
-    }));
-  }
- */
-
-  testAdd = (title) => {
-    const id = this.state.count;
-    const note = {
-      title,
-      text: 'hello',
-      x: 200,
-      y: 20,
-      zIndex: 10,
+      isEdit: false,
     };
 
     this.setState((prevState) => ({
       allNotes: prevState.allNotes.set(id, note),
       count: prevState.count + 1,
     }));
-
-    // WHY IS THERE AN ERROR HERE?
-    this.state.allNotes.entrySeq().map(([id, note])) => {
-
-      console.log('hello');
-
-    }
   }
 
-  renderNote() {
-    // iterate through all the items in the Map
-
-    if (this.state.count > 0) {
-      return <Note info={this.state.allNotes.get(0)} />;
-    } return 0;
+  // callback to delete note, triggered by the delete button
+  deleteNote = (id) => {
+    this.setState((prevState) => ({
+      allNotes: prevState.allNotes.delete(id),
+    }));
   }
 
-  render() {
+// callback to set the notes editing
+// ... copies the topline keys + values
+noteEditUpdate = (id, isEdit) => {
+  this.setState((prevState) => ({
+    allNotes: prevState.allNotes.update(id, (prevNote) => {
+      return { ...prevNote, isEdit };
+    }),
+  }));
+}
+
+noteUpdate = (id, text) => {
+  this.setState((prevState) => ({
+    allNotes: prevState.allNotes.update(id, (prevNote) => {
+      return { ...prevNote, isEdit: false, text };
+    }),
+  }));
+}
+
+// iterates through the map and renders all of the notes
+renderNote() {
+  // iterate through all the items in the Map
+  const valNotes = this.state.allNotes.entrySeq().map(([id, note]) => {
     return (
-      <div>
-        <AddBar onSubmit={this.testAdd} />
-        {this.renderNote()}
-      </div>
-
+      <Note key={id}
+        id={id}
+        info={this.state.allNotes.get(id)}
+        finishEdit={this.noteUpdate}
+        onEdit={this.noteEditUpdate}
+        onDelete={this.deleteNote}
+      />
     );
-  }
+  });
+  return valNotes;
+}
+
+render() {
+  return (
+    <div>
+      <AddBar onSubmit={this.addNote} />
+      {this.renderNote()}
+    </div>
+  );
+}
 }
 
 ReactDOM.render(<App />, document.getElementById('main'));
-
-// function to delete notes, triggered by button from note
-
-// function to create notes, triggered by AddBar submit
-
-// function that iterates through the map and renders everything

@@ -16,7 +16,7 @@ inputChange = (event) => {
 render() {
   return (
     <div>
-      <input onChange={this.inputChange} />
+      <input onChange={this.inputChange} value={this.state.heading} />
       <button type="button" onClick={() => this.props.onSubmit(this.state.heading)}>create button</button>
     </div>
   );
