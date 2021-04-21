@@ -22,7 +22,6 @@ render() {
   );
 }
 }
-
 // onClick of button runs call back function
 
 export default AddBar;
