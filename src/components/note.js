@@ -15,8 +15,6 @@ class Note extends Component {
       heading: this.props.info.title,
       text: this.props.info.text,
       id: this.props.id,
-      x: this.props.info.x,
-      y: this.props.info.y,
     };
   }
 
@@ -57,8 +55,8 @@ textOnChange = (event) => {
   }
 
   handleDrag = (e, data) => {
-    this.setState({ x: data.x, y: data.y });
-    this.props.dragFinish(this.props.id, this.state.x, this.state.y);
+    //    this.setState({ x: data.x, y: data.y });
+    this.props.dragFinish(this.props.id, data.x, data.y);
   }
 
   render() {
@@ -68,7 +66,7 @@ textOnChange = (event) => {
         grid={[25, 25]}
         defaultPosition={{ x: 20, y: 20 }}
         position={{
-          x: this.state.x, y: this.state.y, width: 10, height: 10,
+          x: this.props.info.x, y: this.props.info.y, width: 10, height: 10,
         }}
         onDrag={this.handleDrag}
       >

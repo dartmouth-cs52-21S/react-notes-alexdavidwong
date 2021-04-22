@@ -10,6 +10,7 @@ import ReactDOM from 'react-dom';
 import { Map } from 'immutable';
 import Note from './components/note';
 import AddBar from './components/add_bar';
+import * as db from './services/datastore';
 
 // constructor stores the notes in an immutable map
 class App extends Component {
@@ -23,29 +24,13 @@ class App extends Component {
     };
   }
 
-  // adds a new note, triggered by submit button
-  addNote = (title) => {
-    const id = this.state.count;
-    const note = {
-      title,
-      text: 'hello',
-      x: 200,
-      y: 20,
-      zIndex: 10,
-      isEdit: false,
-    };
+  componentDidMount = () => {
+    db.fetchNotes((notes) => {
+      // eslint-disable-next-line new-cap
+      this.setState({ allNotes: Map(notes) });
+    });
 
-    this.setState((prevState) => ({
-      allNotes: prevState.allNotes.set(id, note),
-      count: prevState.count + 1,
-    }));
-  }
-
-  // callback to delete note, triggered by the delete button
-  deleteNote = (id) => {
-    this.setState((prevState) => ({
-      allNotes: prevState.allNotes.delete(id),
-    }));
+    console.log('hello');
   }
 
 // callback to set the notes editing
@@ -58,22 +43,6 @@ noteEditUpdate = (id, isEdit) => {
   }));
 }
 
-noteUpdate = (id, text) => {
-  this.setState((prevState) => ({
-    allNotes: prevState.allNotes.update(id, (prevNote) => {
-      return { ...prevNote, isEdit: false, text };
-    }),
-  }));
-}
-
-positionUpdate = (id, x, y) => {
-  this.setState((prevState) => ({
-    allNotes: prevState.allNotes.update(id, (prevNote) => {
-      return { ...prevNote, x, y };
-    }),
-  }));
-}
-
 // iterates through the map and renders all of the notes
 renderNote() {
   // iterate through all the items in the Map
@@ -82,10 +51,10 @@ renderNote() {
       <Note key={id}
         id={id}
         info={this.state.allNotes.get(id)}
-        finishEdit={this.noteUpdate}
+        finishEdit={db.updateText}
         onEdit={this.noteEditUpdate}
-        onDelete={this.deleteNote}
-        dragFinish={this.positionUpdate}
+        onDelete={db.deleteNote}
+        dragFinish={db.updatePosition}
       />
     );
   });
@@ -95,7 +64,7 @@ renderNote() {
 render() {
   return (
     <div>
-      <AddBar onSubmit={this.addNote} />
+      <AddBar onSubmit={db.addNote} />
       {this.renderNote()}
     </div>
   );
