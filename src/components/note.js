@@ -6,30 +6,34 @@ class Note extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      text: this.props.info.text,
-      id: this.props.id,
-    };
+    // going to store local changes
+    this.state = {};
   }
 
 textOnChange = (event) => {
-  this.setState({ text: event.target.value });
+  this.props.updateText(this.props.id, event.target.value, this.props.info.title, true);
+}
+
+titleOnChange= (event) => {
+  this.props.updateTitle(this.props.id, event.target.value);
 }
 
   renderSection = () => {
     const position = 'relative';
-    // eslint-disable-next-line no-unused-vars
     const { zIndex } = this.props.info;
 
     if (this.props.info.isEdit) {
       return (
         <div className="note noteEdit" style={{ position }}>
           <div>
-            <textarea onChange={this.textOnChange} value={this.state.text} />
+            <p>Heading Changes</p>
+            <textarea onChange={this.titleOnChange} value={this.props.info.title} />
+            <p>Content Changes</p>
+            <textarea onChange={this.textOnChange} value={this.props.info.text} />
           </div>
           <div>
             <button type="button" onClick={() => this.props.onDelete(this.props.id)} id="delete">delete</button>
-            <button type="button" id="edit" onClick={() => this.props.finishEdit(this.state.id, this.state.text, false)}>done editing</button>
+            <button type="button" id="edit" onClick={() => this.props.onEdit(this.props.id, false)}>done editing</button>
           </div>
         </div>
       );

@@ -42,10 +42,17 @@ function updateEdit(id, isEdit) {
   });
 }
 
-function updateText(id, text, isEdit) {
+function updateText(id, text, title, isEdit) {
   firebase.database().ref('notes').child(id).update({
     text,
+    title,
     isEdit,
+  });
+}
+
+function updateTitle(id, title) {
+  firebase.database().ref('notes').child(id).update({
+    title,
   });
 }
 
@@ -72,5 +79,5 @@ function dragStopZIndex(id) {
 }
 
 export {
-  fetchNotes, addNote, updateText, deleteNote, updatePosition, updateEdit, dragStartZIndex, dragStopZIndex,
+  fetchNotes, addNote, updateText, deleteNote, updatePosition, updateEdit, dragStartZIndex, dragStopZIndex, updateTitle,
 };

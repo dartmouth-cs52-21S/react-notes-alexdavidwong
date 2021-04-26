@@ -35,8 +35,7 @@ class App extends Component {
 
   undoNote = (id) => {
     if (this.state.prevNote.has(id)) {
-      console.log(this.state.prevNote.get(id).text);
-      db.updateText(id, this.state.prevNote.get(id).text, false);
+      db.updateText(id, this.state.prevNote.get(id).text, this.state.prevNote.get(id).title, false);
     }
   }
 
@@ -48,7 +47,8 @@ class App extends Component {
           id={id}
           info={note}
           undoNote={this.undoNote}
-          finishEdit={db.updateText}
+          updateText={db.updateText}
+          updateTitle={db.updateTitle}
           onEdit={db.updateEdit}
           onDelete={db.deleteNote}
           dragStart={db.dragStartZIndex}
