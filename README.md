@@ -1,21 +1,21 @@
-<<<<<<< HEAD
-# Title
+# React Notes
 
-*description*
+A site that, like a Google document, allows contributors to create and store notes.
 
-[deployed url](http://url-if-deployed-here)
+[deployed url](https://sharp-hermann-d49b2f.netlify.app/)
 
 ## What Worked Well
+- getting the core features to work
+- setting up functions to interact with firebase
 
 ## What Didn't
+- had some difficulties understanding the flow of components and how react operated
+- understanding the workings of the Immutable Map
 
 ## Extra Credit
+- extra styles, with hover effects, and button hovers
+- brings selected note forward with modified z-index
+- undos for one step in the text
 
 ## Screenshots
-=======
-# SA2
-
-Site that loads an image and counts the seconds the page has been there.
-
-[deployed url](https://brave-williams-d890d6.netlify.app)
->>>>>>> b37d6a1e78d44a6c82be998ea81722ad79a38aca
+[App Screen](./screenshots/app.png)

@@ -1,8 +1,8 @@
 /* eslint-disable new-cap */
 /*
-TODO: ask about iteration over the database
-add draggability
-add rendering for each note
+Alex Wong
+4/26/21
+Lab 3: React Notes
 */
 
 import React, { Component } from 'react';
@@ -19,21 +19,27 @@ class App extends Component {
     super(props);
 
     this.state = {
-      // eslint-disable-next-line new-cap
       allNotes: Map(),
+      prevNote: Map(),
     };
   }
 
   componentDidMount = () => {
     db.fetchNotes((notes) => {
-      // eslint-disable-next-line new-cap
-      this.setState({
+      this.setState((prevState) => ({
+        prevNote: prevState.allNotes,
         allNotes: Map(notes),
-      });
+      }));
     });
   }
 
-  // iterates through the map and renders all of the notes
+  undoNote = (id) => {
+    if (this.state.prevNote.has(id)) {
+      console.log(this.state.prevNote.get(id).text);
+      db.updateText(id, this.state.prevNote.get(id).text, false);
+    }
+  }
+
   renderNote() {
   // iterate through all the items in the Map
     const valNotes = this.state.allNotes.entrySeq().map(([id, note]) => {
@@ -41,6 +47,7 @@ class App extends Component {
         <Note key={id}
           id={id}
           info={note}
+          undoNote={this.undoNote}
           finishEdit={db.updateText}
           onEdit={db.updateEdit}
           onDelete={db.deleteNote}

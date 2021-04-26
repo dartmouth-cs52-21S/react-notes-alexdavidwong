@@ -13,10 +13,7 @@ class Note extends Component {
   }
 
 textOnChange = (event) => {
-  const text = event.target.value;
-  this.setState({ text });
-  this.props.finishEdit(this.props.id, text, true);
-  console.log(text);
+  this.setState({ text: event.target.value });
 }
 
   renderSection = () => {
@@ -28,7 +25,7 @@ textOnChange = (event) => {
       return (
         <div className="note noteEdit" style={{ position }}>
           <div>
-            <textarea onChange={this.textOnChange} value={this.props.info.text} />
+            <textarea onChange={this.textOnChange} value={this.state.text} />
           </div>
           <div>
             <button type="button" onClick={() => this.props.onDelete(this.props.id)} id="delete">delete</button>
@@ -44,6 +41,7 @@ textOnChange = (event) => {
           <button type="button" onClick={() => this.props.onDelete(this.props.id)} id="delete">delete</button>
           <button type="button" id="edit" onClick={() => this.props.onEdit(this.props.id, true)}>edit</button>
           <button type="button" className="move">move</button>
+          <button type="button" className="undo" onClick={() => this.props.undoNote(this.props.id)}>undo</button>
         </div>
         <div>
           <h1>{this.props.info.title}</h1>
