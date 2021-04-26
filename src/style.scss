@@ -1,0 +1,65 @@
+body {
+  background-color: rgb(241, 241, 241);
+}
+
+button {
+  background-color: rgb(241, 241, 241);
+  border: none;
+  margin-right: 10px;
+  padding: 10px;
+  border-radius: 10px;
+
+  transition: all 1s;
+}
+
+button:hover {
+  background-color: rgb(58, 58, 58);
+  color: white;
+}
+
+input {
+  margin-right: 10px;
+  height: 100%;
+}
+
+.addBar {
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.operationBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.note {
+  width: fit-content;
+  height: fit-content;
+  min-width: 200px;
+  min-height: 200px;
+  max-width: 400px;
+  max-height: 400px;
+
+  padding: 20px;
+  border-radius: 20px;
+  background-color: #fcfcfc;
+
+  overflow: scroll;
+  transition: all 0.5s;
+
+  font-family: 'Roboto', sans-serif;
+}
+
+.note:hover {
+  background-color: #b7deeb;
+  box-shadow: 0px 0px 10px 10px #999999;
+  transform: scale(1.05);
+}
+
+.noteWrapper {
+  position: relative;
+  height: 0px;
+  width: 0px;
+}
