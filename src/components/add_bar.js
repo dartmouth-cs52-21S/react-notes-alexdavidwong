@@ -15,13 +15,18 @@ inputChange = (event) => {
 
 render() {
   return (
-    <div>
+    <div className="addBar">
       <input onChange={this.inputChange} value={this.state.heading} />
-      <button type="button" onClick={() => this.props.onSubmit(this.state.heading)}>create button</button>
+      <button type="button"
+        onClick={() => {
+          this.props.onSubmit(this.state.heading);
+          this.setState({ heading: '' });
+        }}
+      >add note
+      </button>
     </div>
   );
 }
 }
-// onClick of button runs call back function
 
 export default AddBar;

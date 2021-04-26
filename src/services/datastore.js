@@ -31,14 +31,21 @@ function addNote(title) {
     text: '',
     x: 200,
     y: 20,
-    zIndex: 10,
+    zIndex: 1,
     isEdit: false,
   });
 }
 
-function updateText(id, text) {
+function updateEdit(id, isEdit) {
+  firebase.database().ref('notes').child(id).update({
+    isEdit,
+  });
+}
+
+function updateText(id, text, isEdit) {
   firebase.database().ref('notes').child(id).update({
     text,
+    isEdit,
   });
 }
 
@@ -52,6 +59,18 @@ function deleteNote(id) {
   firebase.database().ref('notes').child(id).remove();
 }
 
+function dragStartZIndex(id) {
+  firebase.database().ref('notes').child(id).update({
+    zIndex: 100,
+  });
+}
+
+function dragStopZIndex(id) {
+  firebase.database().ref('notes').child(id).update({
+    zIndex: 10,
+  });
+}
+
 export {
-  fetchNotes, addNote, updateText, deleteNote, updatePosition,
+  fetchNotes, addNote, updateText, deleteNote, updatePosition, updateEdit, dragStartZIndex, dragStopZIndex,
 };
